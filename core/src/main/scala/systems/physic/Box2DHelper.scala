@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
-import units.ships.Ship
+import units.ships.Brik
 
 /**
   * Created by julien on 24/01/17.
@@ -19,12 +19,12 @@ object Box2DHelper {
   def toBoxUnits(f: Float) = f / Rome.ppm
   def fromBoxUnits(f: Float) = f * Rome.ppm
 
-  def setPos(ship: Ship, x: Float, y: Float) = {
+  def setPos(ship: Brik, x: Float, y: Float) = {
     ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
   }
 
-  def screenX(ship: Ship) = fromBoxUnits(ship.body.getPosition.x)
-  def screenY(ship: Ship) = fromBoxUnits(ship.body.getPosition.y)
+  def screenX(ship: Brik) = fromBoxUnits(ship.body.getPosition.x)
+  def screenY(ship: Brik) = fromBoxUnits(ship.body.getPosition.y)
 
   def debugRender(matrix4: Matrix4) = {
     val renderMatrix = new Matrix4(matrix4)
@@ -38,10 +38,10 @@ object Box2DHelper {
   def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle, obj: Object, position: Vector2) = {
     createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), obj, position)
   }
-  def addAntennas(ship: Ship): Unit = {
+  def addAntennas(ship: Brik): Unit = {
     createAntenna(+15f, -15f, ship)
   }
-  private def createAntenna(angleMin: Float, angleMax: Float, ship: Ship) = {
+  private def createAntenna(angleMin: Float, angleMax: Float, ship: Brik) = {
     val radius = 8f
     val shape = creatureConeShape(radius)
     val fixture = createFixture(ship.body, shape, ship.category(), ship.mask(), ship)

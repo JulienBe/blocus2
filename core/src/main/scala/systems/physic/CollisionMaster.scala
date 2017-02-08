@@ -1,8 +1,6 @@
 package systems.physic
 
 import com.badlogic.gdx.physics.box2d.{Contact, ContactImpulse, ContactListener, Manifold}
-import systems.eventhub.EventHub
-import units.ships.Ship
 
 /**
   * Created by julien on 24/01/17.
@@ -16,10 +14,6 @@ class CollisionMaster extends ContactListener {
     val dataA = c.getFixtureA.getUserData
     val dataB = c.getFixtureB.getUserData
 
-    println(dataA + " : " + dataB)
-    if (dataA.isInstanceOf[Ship] && dataB.isInstanceOf[Ship]) {
-      EventHub.shipCollision(dataA, dataB)
-    }
   }
 
 }
