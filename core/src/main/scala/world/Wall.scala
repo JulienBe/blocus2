@@ -9,13 +9,14 @@ import systems.physic.{Box2DHelper, Box2DObject, Physic}
 /**
   * Created by julien on 28/01/17.
   */
-class Wall(val rectangle: Rectangle) {
-  val body = createBody
-
-  protected def createBody = Box2DHelper.createRectangle(Wall, rectangle, this, Creator.vectorInScreen())
+class Wall(val rectangle: Rectangle) extends Box2DObject {
+  override def bodyType(): BodyType = Wall.bodyType
+  override def category(): Short = Wall.category
+  override def mask(): Short = Wall.mask
+  override def createBody = Box2DHelper.createRectangle(this, rectangle, this, Creator.vectorInScreen())
 }
 
-object Wall extends Box2DObject {
+object Wall {
 
   val category = Physic.otherCategory
   val mask = Physic.otherMask

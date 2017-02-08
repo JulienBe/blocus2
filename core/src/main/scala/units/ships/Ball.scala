@@ -10,10 +10,9 @@ import systems.eventhub.{EventHub, EventListener}
 import systems.physic.{Box2DHelper, Box2DObject, Physic}
 
 /**
-  * Created by julien on 23/01/17.
+  * Created by julien on 08/02/17.
   */
-class Brik extends EventListener with Box2DObject {
-
+class Ball extends EventListener with Box2DObject {
   def category() = Brik.category
   def bodyType() = Brik.bodyType
   def mask() = Brik.mask
@@ -32,10 +31,10 @@ class Brik extends EventListener with Box2DObject {
   override def heyListen(event: Event) = event match {
     case _ => println("Ouch ! " + event)
   }
-
 }
 
-object Brik {
+
+object Ball {
   def bodyType = BodyType.DynamicBody
 
   val size = new Size(10, 10)

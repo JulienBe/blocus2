@@ -23,8 +23,8 @@ object Box2DHelper {
     ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
   }
 
-  def screenX(ship: Brik) = fromBoxUnits(ship.body.getPosition.x)
-  def screenY(ship: Brik) = fromBoxUnits(ship.body.getPosition.y)
+  def screenX(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.x)
+  def screenY(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.y)
 
   def debugRender(matrix4: Matrix4) = {
     val renderMatrix = new Matrix4(matrix4)
