@@ -22,6 +22,4 @@ class MyInputProcessor extends InputAdapter {
     true
   }
 
-
-
 }

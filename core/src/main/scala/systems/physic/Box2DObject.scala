@@ -1,5 +1,6 @@
 package systems.physic
 
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 
@@ -12,4 +13,9 @@ trait Box2DObject {
   def bodyType(): BodyType
   def category(): Short
   def mask(): Short
+
+  def applyForce(vector: Vector2) = {
+    body.applyForceToCenter(vector, true)
+    println(vector)
+  }
 }
