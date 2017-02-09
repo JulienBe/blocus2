@@ -20,7 +20,7 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
 
   def act(delta: Float) = {
     Rome.time += delta
-    World.act()
+    World.act(delta)
   }
 
   private def draw = {

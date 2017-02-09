@@ -19,7 +19,9 @@ object World extends EventListener {
 
   def removeBrik(brik: Brik) = briks.removeValue(brik, true)
 
-  def act() = {
+  def act(delta: Float) = {
+    for (i <- 0 until balls.size)
+      balls.get(i).act(delta)
   }
 
   def render(shapeRenderer: ShapeRenderer) = {

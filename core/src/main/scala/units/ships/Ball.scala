@@ -7,12 +7,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.Creator
 import systems.eventhub.events.Event
 import systems.eventhub.{EventHub, EventListener}
-import systems.physic.{Box2DHelper, Box2DObject, Physic}
+import systems.physic.{Box2DHelper, KinematicObject, Physic}
 
 /**
   * Created by julien on 08/02/17.
   */
-class Ball extends EventListener with Box2DObject {
+class Ball extends EventListener with KinematicObject {
 
   def category() = Ball.category
   def bodyType() = Ball.bodyType
@@ -24,7 +24,7 @@ class Ball extends EventListener with Box2DObject {
 
   EventHub.registerForCollisions(this)
 
-  def act() = {}
+  def act(delta: Float) = super.updatePhysic(delta)
 
   def draw(batch: ShapeRenderer) = {
     batch.circle(Box2DHelper.screenX(this) + Ball.size.hw, Box2DHelper.screenY(this) + Ball.size.hh, Ball.size.w)
@@ -45,7 +45,7 @@ object Ball {
 
   def get() = {
     val b = new Ball
-    b.applyForce(V2.getRnd().scl(600))
+    b.applyForce(V2.getRnd().scl(6))
     b
   }
 }
