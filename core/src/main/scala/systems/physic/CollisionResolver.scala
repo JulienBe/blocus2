@@ -3,7 +3,7 @@ package systems.physic
 import main.Rome
 import systems.eventhub.{EventHub, EventListener}
 import systems.eventhub.events.{BallCollisionEvent, Event}
-import world.Wall
+import units.Wall
 
 /**
   * Created by julien on 11/02/17.

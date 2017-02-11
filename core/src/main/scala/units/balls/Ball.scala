@@ -6,11 +6,12 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.Creator
 import systems.physic.{Box2DHelper, KinematicObject, Physic}
+import units.GameObject
 
 /**
   * Created by julien on 08/02/17.
   */
-class Ball extends KinematicObject {
+class Ball extends KinematicObject with GameObject {
 
   def category() = Ball.category
   def bodyType() = Ball.bodyType
@@ -19,9 +20,9 @@ class Ball extends KinematicObject {
 
   override def createBody(): Body = Box2DHelper.createCircle(this, Ball.size.w, Creator.vectorInScreen())
 
-  def act(delta: Float) = super.updatePhysic(delta)
+  override def act(delta: Float) = updatePhysic(delta)
 
-  def draw(batch: ShapeRenderer) = {
+  override def draw(batch: ShapeRenderer) = {
     batch.circle(Box2DHelper.screenX(this) + Ball.size.hw, Box2DHelper.screenY(this) + Ball.size.hh, Ball.size.w)
   }
 

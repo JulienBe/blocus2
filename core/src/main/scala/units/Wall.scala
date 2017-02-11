@@ -1,5 +1,6 @@
-package world
+package units
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.{Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.utils.Array
@@ -9,11 +10,15 @@ import systems.physic.{Box2DHelper, Box2DObject, Physic}
 /**
   * Created by julien on 28/01/17.
   */
-class Wall(val rectangle: Rectangle, val collisionMultiplier: Vector2) extends Box2DObject {
+class Wall(val rectangle: Rectangle, val collisionMultiplier: Vector2) extends Box2DObject with GameObject {
   override def bodyType(): BodyType = Wall.bodyType
   override def category(): Short = Wall.category
   override def mask(): Short = Wall.mask
   override def createBody = Box2DHelper.createRectangle(this, rectangle, this, Creator.vectorInScreen())
+
+  override def act(delta: Float): GameObject = {}
+
+  override def draw(batch: ShapeRenderer): GameObject = {}
 }
 
 object Wall {

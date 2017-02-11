@@ -8,11 +8,12 @@ import systems.Creator
 import systems.eventhub.events.Event
 import systems.eventhub.{EventHub, EventListener}
 import systems.physic.{Box2DHelper, Box2DObject, Physic}
+import units.GameObject
 
 /**
   * Created by julien on 23/01/17.
   */
-class Brik extends EventListener with Box2DObject {
+class Brik extends EventListener with Box2DObject with GameObject {
 
   def category() = Brik.category
   def bodyType() = Brik.bodyType
@@ -23,9 +24,9 @@ class Brik extends EventListener with Box2DObject {
 
   EventHub.registerForCollisions(this)
 
-  def act() = {}
+  override def act(delta: Float) = {}
 
-  def draw(batch: ShapeRenderer) = {
+  override def draw(batch: ShapeRenderer) = {
     batch.circle(Box2DHelper.screenX(this) + Brik.size.hw, Box2DHelper.screenY(this) + Brik.size.hh, Brik.size.w)
   }
 
