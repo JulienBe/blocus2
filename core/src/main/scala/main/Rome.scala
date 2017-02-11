@@ -2,7 +2,7 @@ package main
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.{Game, Gdx}
-import draw.GdxProvider
+import draw.{GdxProvider, Textures}
 import systems.MyInputProcessor
 import systems.eventhub.EventListener
 import systems.eventhub.events.Event
@@ -32,6 +32,7 @@ object Rome extends Game {
     setScreen(new Looper(new GdxProvider {}))
     Gdx.input.setInputProcessor(new MyInputProcessor())
     CollisionResolver
+    Textures.loadAssets()
   }
 
   def logUnhandledEvent(event: Event, from: EventListener) =

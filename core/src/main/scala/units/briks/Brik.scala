@@ -1,7 +1,7 @@
 package units.briks
 
 import brols.Size
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.Creator
@@ -26,8 +26,8 @@ class Brik extends EventListener with Box2DObject with GameObject {
 
   override def act(delta: Float) = {}
 
-  override def draw(batch: ShapeRenderer) = {
-    batch.circle(Box2DHelper.screenX(this) + Brik.size.hw, Box2DHelper.screenY(this) + Brik.size.hh, Brik.size.w)
+  override def draw(batch: SpriteBatch) = {
+//    batch.circle(Box2DHelper.screenX(this) + Brik.size.hw, Box2DHelper.screenY(this) + Brik.size.hh, Brik.size.w)
   }
 
   override def heyListen(event: Event) = event match {

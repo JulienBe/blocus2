@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
-import units.ships.briks.Brik
+import units.briks.Brik
 
 /**
   * Created by julien on 24/01/17.
@@ -22,8 +22,8 @@ object Box2DHelper {
     ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
   }
 
-  def screenX(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.x)
-  def screenY(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.y)
+  def centerScreenX(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.x)
+  def centerScreenY(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.y)
 
   def debugRender(matrix4: Matrix4) = {
     val renderMatrix = new Matrix4(matrix4)
@@ -94,8 +94,8 @@ object Box2DHelper {
   }
   private def createCircleShape(width: Float): CircleShape = {
     val shape = new CircleShape()
-    shape.setRadius(toBoxUnits(width))
-    vector2.set(toBoxUnits(width / 2), toBoxUnits(width / 2))
+    shape.setRadius(toBoxUnits(width / 2))
+    vector2.set(toBoxUnits(width / 4), toBoxUnits(width / 4))
     shape.setPosition(vector2)
     shape
   }

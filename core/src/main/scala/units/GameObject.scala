@@ -1,6 +1,6 @@
 package units
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 /**
   * Created by julien on 08/02/17.
@@ -8,6 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 trait GameObject {
 
   def act(delta: Float)
-  def draw(batch: ShapeRenderer)
+  def draw(batch: SpriteBatch)
 
 }

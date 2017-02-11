@@ -26,9 +26,9 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   private def draw = {
     camera.update()
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-    shapeRenderer.begin()
-    World.render(shapeRenderer)
-    shapeRenderer.end()
+    spriteBatch.begin()
+    World.render(spriteBatch)
+    spriteBatch.end()
     Box2DHelper.debugRender(camera.combined)
   }
 }

@@ -1,9 +1,10 @@
 package units.balls
 
 import brols.{Size, V2}
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
+import draw.Textures
 import systems.Creator
 import systems.physic.{Box2DHelper, KinematicObject, Physic}
 import units.GameObject
@@ -22,8 +23,8 @@ class Ball extends KinematicObject with GameObject {
 
   override def act(delta: Float) = updatePhysic(delta)
 
-  override def draw(batch: ShapeRenderer) = {
-    batch.circle(Box2DHelper.screenX(this) + Ball.size.hw, Box2DHelper.screenY(this) + Ball.size.hh, Ball.size.w)
+  override def draw(batch: SpriteBatch) = {
+    batch.draw(Textures.ball, Box2DHelper.centerScreenX(this) - Ball.size.qw, Box2DHelper.centerScreenY(this) - Ball.size.qh, Ball.size.w, Ball.size.h)
   }
 
 }
@@ -31,13 +32,13 @@ class Ball extends KinematicObject with GameObject {
 object Ball {
 
   val bodyType = BodyType.DynamicBody
-  val size = new Size(10, 10)
+  val size = new Size(16, 16)
   val category = Physic.otherCategory
   val mask = Physic.otherMask
 
   def get() = {
     val b = new Ball
-    b.applyForce(V2.getRnd().scl(6))
+    b.applyForce(V2.getRnd().scl(0.1f))
     b
   }
 }

@@ -1,5 +1,6 @@
 package world
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Array
 import main.Rome
@@ -25,9 +26,9 @@ object World extends EventListener {
       gameObjects.get(i).act(delta)
   }
 
-  def render(shapeRenderer: ShapeRenderer) = {
+  def render(spriteBatch: SpriteBatch) = {
     for (i <- 0 until gameObjects.size)
-      gameObjects.get(i).draw(shapeRenderer)
+      gameObjects.get(i).draw(spriteBatch)
   }
 
   override def heyListen(event: Event) = event match {

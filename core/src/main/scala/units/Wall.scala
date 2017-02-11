@@ -1,6 +1,6 @@
 package units
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.{Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.utils.Array
@@ -16,9 +16,9 @@ class Wall(val rectangle: Rectangle, val collisionMultiplier: Vector2) extends B
   override def mask(): Short = Wall.mask
   override def createBody = Box2DHelper.createRectangle(this, rectangle, this, Creator.vectorInScreen())
 
-  override def act(delta: Float): GameObject = {}
+  override def act(delta: Float) = {}
 
-  override def draw(batch: ShapeRenderer): GameObject = {}
+  override def draw(batch: SpriteBatch) = {}
 }
 
 object Wall {
