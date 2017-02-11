@@ -1,7 +1,7 @@
 package systems.eventhub.events
 
 import com.badlogic.gdx.physics.box2d.Contact
-import units.ships.Ball
+import units.balls.Ball
 
 /**
   * Created by julien on 24/01/17.

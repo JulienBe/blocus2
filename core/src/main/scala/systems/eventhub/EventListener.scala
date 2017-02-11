@@ -1,5 +1,6 @@
 package systems.eventhub
 
+import main.Rome
 import systems.eventhub.events.Event
 
 /**
@@ -7,4 +8,5 @@ import systems.eventhub.events.Event
   */
 trait EventListener {
   def heyListen(event: Event)
+  def unhandled(event: Event) = Rome.logUnhandledEvent(event, this)
 }

@@ -5,7 +5,8 @@ import com.badlogic.gdx.utils.Array
 import main.Rome
 import systems.eventhub.events.{Event, JustTouchedEvent}
 import systems.eventhub.{EventHub, EventListener}
-import units.ships.{Ball, Brik}
+import units.balls.Ball
+import units.briks.Brik
 
 /**
   * Created by julien on 28/01/17.
@@ -33,6 +34,6 @@ object World extends EventListener {
 
   override def heyListen(event: Event) = event match {
     case justTouched: JustTouchedEvent => balls.add(Ball.get())
-    case _ => Rome.logUnhandledEvent(event, this)
+    case _ => unhandled(event)
   }
 }

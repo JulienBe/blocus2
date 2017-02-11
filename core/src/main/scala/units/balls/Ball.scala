@@ -1,4 +1,4 @@
-package units.ships
+package units.balls
 
 import brols.{Size, V2}
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer

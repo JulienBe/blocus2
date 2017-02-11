@@ -2,7 +2,7 @@ package systems.eventhub
 
 import com.badlogic.gdx.physics.box2d.Contact
 import systems.eventhub.events.{BallCollisionEvent, CollisionEvent, JustTouchedEvent, TouchedEvent}
-import units.ships.Ball
+import units.balls.Ball
 
 import scala.collection.mutable
 

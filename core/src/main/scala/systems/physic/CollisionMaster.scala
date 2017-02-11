@@ -2,7 +2,7 @@ package systems.physic
 
 import com.badlogic.gdx.physics.box2d.{Contact, ContactImpulse, ContactListener, Manifold}
 import systems.eventhub.EventHub
-import units.ships.Ball
+import units.balls.Ball
 
 /**
   * Created by julien on 24/01/17.
@@ -20,11 +20,9 @@ class CollisionMaster extends ContactListener {
     ball(dataB, dataA, c)
   }
 
-
   def ball(obj: Object, other: Object, contact: Contact) = obj match {
     case ball: Ball => EventHub.ballCollision(ball, other, contact)
     case _ =>
   }
-
 
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
-import units.ships.Brik
+import units.ships.briks.Brik
 
 /**
   * Created by julien on 24/01/17.

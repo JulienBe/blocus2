@@ -1,4 +1,4 @@
-package units.ships
+package units.briks
 
 import brols.Size
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -30,7 +30,7 @@ class Brik extends EventListener with Box2DObject {
   }
 
   override def heyListen(event: Event) = event match {
-    case _ => println("Ouch ! " + event)
+    case _ => unhandled(event)
   }
 
 }
