@@ -19,7 +19,7 @@ class Brik extends EventListener with Box2DObject {
   def mask() = Brik.mask
   def size() = Brik.size
 
-  override def createBody(): Body = Box2DHelper.createCircle(this, Brik.size.w, this, Creator.vectorInScreen())
+  override def createBody(): Body = Box2DHelper.createCircle(this, Brik.size.w, Creator.vectorInScreen())
 
   EventHub.registerForCollisions(this)
 

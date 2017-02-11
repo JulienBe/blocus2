@@ -1,6 +1,8 @@
 package systems.eventhub
 
-import systems.eventhub.events.{CollisionEvent, JustTouchedEvent, ShipCollisionEvent, TouchedEvent}
+import com.badlogic.gdx.physics.box2d.Contact
+import systems.eventhub.events.{BallCollisionEvent, CollisionEvent, JustTouchedEvent, TouchedEvent}
+import units.ships.Ball
 
 import scala.collection.mutable
 
@@ -19,12 +21,12 @@ object EventHub {
   private def tell(obj: Any) = obj match {
     case touched: TouchedEvent => inputsListener.foreach(_.heyListen(touched))
     case justTouched: JustTouchedEvent => inputsListener.foreach(_.heyListen(justTouched))
-    case shipCollision: ShipCollisionEvent => inputsListener.foreach(_.heyListen(shipCollision))
+    case collisionEvent: CollisionEvent => collisionsListener.foreach(_.heyListen(collisionEvent))
   }
 
   def mouseMoved(x: Int, y: Int) = tell(new TouchedEvent(x, y))
   def justTouched(x: Int, y: Int) = tell(new JustTouchedEvent(x, y))
 
-  def shipCollision(objA: Object, objB: Object) = tell(new ShipCollisionEvent(objA, objB))
+  def ballCollision(ball: Ball, objB: Object, contact: Contact) = tell(new BallCollisionEvent(ball, objB, contact))
 
 }

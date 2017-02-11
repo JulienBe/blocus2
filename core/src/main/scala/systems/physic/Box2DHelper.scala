@@ -31,8 +31,8 @@ object Box2DHelper {
     debugRenderer.render(Physic.world, renderMatrix)
   }
 
-  def createCircle(box2DObject: Box2DObject, width: Float, obj: Object, position: Vector2): Body = {
-    createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), obj, position)
+  def createCircle(box2DObject: Box2DObject, width: Float, position: Vector2): Body = {
+    createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject, position)
   }
   def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle, obj: Object, position: Vector2) = {
     createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), obj, position)
@@ -63,11 +63,17 @@ object Box2DHelper {
     val b = Physic.world.createBody(createBodyDef(bodyType, position))
     createFixture(b, shape, category, mask, obj)
     shape.dispose()
+    b.setAngularDamping(0)
+    b.setAngularVelocity(0)
+    b.setFixedRotation(true)
+    b.setGravityScale(0)
+    b.setLinearDamping(0)
     b
   }
   private def createBodyDef(bodyType: BodyType, position: Vector2): BodyDef = {
     val bodyDef = new BodyDef()
     bodyDef.`type` = bodyType
+    bodyDef.allowSleep = false
     position.scl(toBoxUnits(1))
     if (bodyType == BodyType.DynamicBody)
       bodyDef.position.set(position)
@@ -78,6 +84,10 @@ object Box2DHelper {
     fixtureDef.shape = shape
     fixtureDef.filter.categoryBits = category
     fixtureDef.filter.maskBits = mask
+    fixtureDef.isSensor = true
+    fixtureDef.density = 0
+    fixtureDef.friction = 0
+    fixtureDef.restitution = 0
     val fixture = b.createFixture(fixtureDef)
     fixture.setUserData(obj)
     fixture

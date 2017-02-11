@@ -33,5 +33,6 @@ object World extends EventListener {
 
   override def heyListen(event: Event) = event match {
     case justTouched: JustTouchedEvent => balls.add(Ball.get())
+    case _ => Rome.logUnhandledEvent(event, this)
   }
 }

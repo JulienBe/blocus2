@@ -4,8 +4,13 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.{Game, Gdx}
 import draw.GdxProvider
 import systems.MyInputProcessor
+import systems.eventhub.EventListener
+import systems.eventhub.events.Event
+import systems.physic.CollisionResolver
 
 object Rome extends Game {
+
+  private val unhandledEvent = "Unhandled Event"
 
   val ppm = 80
   var time = 0f
@@ -26,6 +31,10 @@ object Rome extends Game {
   override def create() = {
     setScreen(new Looper(new GdxProvider {}))
     Gdx.input.setInputProcessor(new MyInputProcessor())
+    CollisionResolver
   }
+
+  def logUnhandledEvent(event: Event, from: EventListener) =
+    Gdx.app.debug(Rome.unhandledEvent, from + " :: " + event)
 
 }

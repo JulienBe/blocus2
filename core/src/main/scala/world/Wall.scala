@@ -1,6 +1,6 @@
 package world
 
-import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.{Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.utils.Array
 import systems.Creator
@@ -9,7 +9,7 @@ import systems.physic.{Box2DHelper, Box2DObject, Physic}
 /**
   * Created by julien on 28/01/17.
   */
-class Wall(val rectangle: Rectangle) extends Box2DObject {
+class Wall(val rectangle: Rectangle, val collisionMultiplier: Vector2) extends Box2DObject {
   override def bodyType(): BodyType = Wall.bodyType
   override def category(): Short = Wall.category
   override def mask(): Short = Wall.mask
@@ -22,6 +22,8 @@ object Wall {
   val mask = Physic.otherMask
   val width = 2
   val bodyType = BodyType.StaticBody
+  private val yCollisionInverter = new Vector2(1, -1)
+  private val xCollisionInverter = new Vector2(-1, 1)
 
   def surround(x: Float, y: Float, width: Float, height: Float): Array[Wall] = {
     val bottom =  new Rectangle(x,              y - Wall.width, width,      Wall.width)
@@ -30,10 +32,10 @@ object Wall {
     val right =   new Rectangle(width,          y,              Wall.width, height)
 
     val array = new Array[Wall]()
-    array.add(new Wall(bottom))
-    array.add(new Wall(top))
-    array.add(new Wall(left))
-    array.add(new Wall(right))
+    array.add(new Wall(bottom, yCollisionInverter))
+    array.add(new Wall(top, yCollisionInverter))
+    array.add(new Wall(left, xCollisionInverter))
+    array.add(new Wall(right, xCollisionInverter))
     array
   }
 
