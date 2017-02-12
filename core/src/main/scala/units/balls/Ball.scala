@@ -5,15 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import draw.Textures
-import systems.Creator
-import systems.physic.objects.KinematicObject
+import systems.physic.objects.Box2DObject
 import systems.physic.{Box2DHelper, Physic}
 import units.GameObject
 
 /**
   * Created by julien on 08/02/17.
   */
-class Ball extends KinematicObject with GameObject {
+class Ball extends Box2DObject with GameObject {
 
   var time = 0f
   def category() = Ball.category
@@ -21,13 +20,10 @@ class Ball extends KinematicObject with GameObject {
   def mask() = Ball.mask
   def size() = Ball.size
 
-  override def createBody(): Body = Box2DHelper.createCircle(this, Ball.size.w, Creator.vectorInScreen())
+  override def createBody(): Body = Box2DHelper.createCircle(this, Ball.size.w)
 
   override def act(delta: Float) = {
     time += delta
-//    updatePhysic(delta)
-    if (body.getLinearVelocity.angle() % 45 != 0)
-      body.setLinearVelocity(1, 0)
   }
 
   override def draw(batch: SpriteBatch) = {
@@ -45,7 +41,7 @@ object Ball {
 
   def get() = {
     val b = new Ball
-    b.applyForce(V2.getRnd().scl(0.1f))
+    b.setDir(V2.getRnd().scl(0.1f))
     b
   }
 }

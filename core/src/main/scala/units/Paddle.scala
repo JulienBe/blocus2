@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
-import systems.Creator
-import systems.physic.objects.KinematicObject
+import systems.physic.objects.Box2DObject
 import systems.physic.{Box2DHelper, Physic}
 
 /**
   * Created by julien on 11/02/17.
   */
-class Paddle extends GameObject with KinematicObject {
+class Paddle extends GameObject with Box2DObject {
 
-  override def createBody(): Body = Box2DHelper.createRectangle(this, Paddle.rectangle, Creator.vectorInScreen())
+  override def createBody(): Body = Box2DHelper.createRectangle(this, Paddle.rectangle)
   override def bodyType(): BodyType = Paddle.bodyType
   override def category(): Short = Paddle.category
   override def mask(): Short = Paddle.mask

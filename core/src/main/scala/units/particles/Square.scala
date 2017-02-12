@@ -8,7 +8,7 @@ import draw.Textures
   */
 class Square(var x: Float, var y: Float) {
   def draw(spriteBatch: SpriteBatch) =
-    spriteBatch.draw(Textures.square, x, y, 2, 2)
+    spriteBatch.draw(Textures.square, x, y, 1, 1)
 }
 
 object Square {

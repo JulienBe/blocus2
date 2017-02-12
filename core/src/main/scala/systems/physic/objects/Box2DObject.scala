@@ -1,5 +1,6 @@
 package systems.physic.objects
 
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.physic.Box2DHelper
@@ -15,4 +16,8 @@ trait Box2DObject {
   def mask(): Short
   def centerX: Float = Box2DHelper.centerScreenX(this)
   def centerY: Float = Box2DHelper.centerScreenY(this)
+  def center() = body.getWorldCenter
+  def setDir(vector: Vector2) = {
+    body.setLinearVelocity(vector)
+  }
 }

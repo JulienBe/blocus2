@@ -32,11 +32,11 @@ object Box2DHelper {
     debugRenderer.render(Physic.world, renderMatrix)
   }
 
-  def createCircle(box2DObject: Box2DObject, width: Float, position: Vector2): Body = {
-    createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject, position)
+  def createCircle(box2DObject: Box2DObject, width: Float): Body = {
+    createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject)
   }
-  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle, position: Vector2) = {
-    createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), box2DObject, position)
+  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle) = {
+    createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), box2DObject)
   }
   def addAntennas(ship: Brik): Unit = {
     createAntenna(+15f, -15f, ship)
@@ -60,24 +60,21 @@ object Box2DHelper {
     shape
   }
 
-  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object, position: Vector2) = {
-    val b = Physic.world.createBody(createBodyDef(bodyType, position))
+  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object) = {
+    val b = Physic.world.createBody(createBodyDef(bodyType))
     createFixture(b, shape, category, mask, obj)
     shape.dispose()
-//    b.setFixedRotation(true)
+    b.setFixedRotation(true)
     b.setAngularDamping(0)
     b.setAngularVelocity(0)
     b.setGravityScale(0)
     b.setLinearDamping(0)
     b
   }
-  private def createBodyDef(bodyType: BodyType, position: Vector2): BodyDef = {
+  private def createBodyDef(bodyType: BodyType): BodyDef = {
     val bodyDef = new BodyDef()
     bodyDef.`type` = bodyType
     bodyDef.allowSleep = false
-    position.scl(toBoxUnits(1))
-//    if (bodyType == BodyType.DynamicBody)
-//      bodyDef.position.set(position)
     bodyDef
   }
   private def createFixture(b: Body, shape: Shape, category: Short, mask: Short, obj: Object) = {
@@ -86,9 +83,9 @@ object Box2DHelper {
     fixtureDef.filter.categoryBits = category
     fixtureDef.filter.maskBits = mask
     fixtureDef.isSensor = true
-    fixtureDef.density = 1
+    fixtureDef.density = 0
     fixtureDef.friction = 0
-    fixtureDef.restitution = 1
+    fixtureDef.restitution = 0
     val fixture = b.createFixture(fixtureDef)
     fixture.setUserData(obj)
     fixture
