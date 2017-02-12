@@ -1,4 +1,4 @@
-package systems.physic
+package systems.physic.objects
 
 import brols.V2
 import com.badlogic.gdx.math.Vector2

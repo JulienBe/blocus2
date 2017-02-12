@@ -6,7 +6,8 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import draw.Textures
 import systems.Creator
-import systems.physic.{Box2DHelper, KinematicObject, Physic}
+import systems.physic.objects.KinematicObject
+import systems.physic.{Box2DHelper, Physic}
 import units.GameObject
 
 /**
@@ -14,6 +15,7 @@ import units.GameObject
   */
 class Ball extends KinematicObject with GameObject {
 
+  var time = 0f
   def category() = Ball.category
   def bodyType() = Ball.bodyType
   def mask() = Ball.mask
@@ -21,7 +23,12 @@ class Ball extends KinematicObject with GameObject {
 
   override def createBody(): Body = Box2DHelper.createCircle(this, Ball.size.w, Creator.vectorInScreen())
 
-  override def act(delta: Float) = updatePhysic(delta)
+  override def act(delta: Float) = {
+    time += delta
+//    updatePhysic(delta)
+    if (body.getLinearVelocity.angle() % 45 != 0)
+      body.setLinearVelocity(1, 0)
+  }
 
   override def draw(batch: SpriteBatch) = {
     batch.draw(Textures.ball, Box2DHelper.centerScreenX(this) - Ball.size.qw, Box2DHelper.centerScreenY(this) - Ball.size.qh, Ball.size.w, Ball.size.h)

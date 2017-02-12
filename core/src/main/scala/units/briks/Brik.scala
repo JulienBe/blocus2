@@ -1,13 +1,14 @@
 package units.briks
 
-import brols.Size
+import brols.{R, Size}
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.Creator
 import systems.eventhub.events.Event
 import systems.eventhub.{EventHub, EventListener}
-import systems.physic.{Box2DHelper, Box2DObject, Physic}
+import systems.physic.objects.Box2DObject
+import systems.physic.{Box2DHelper, Physic}
 import units.GameObject
 
 /**
@@ -20,7 +21,7 @@ class Brik extends EventListener with Box2DObject with GameObject {
   def mask() = Brik.mask
   def size() = Brik.size
 
-  override def createBody(): Body = Box2DHelper.createCircle(this, Brik.size.w, Creator.vectorInScreen())
+  override def createBody(): Body = Box2DHelper.createRectangle(this, Brik.rect, Creator.vectorInScreen())
 
   EventHub.registerForCollisions(this)
 
@@ -37,9 +38,10 @@ class Brik extends EventListener with Box2DObject with GameObject {
 }
 
 object Brik {
-  def bodyType = BodyType.DynamicBody
+  def bodyType = BodyType.StaticBody
 
-  val size = new Size(10, 10)
+  val size = new Size(30, 15)
+  val rect = R.get().set(0, 0, size.w, size.h)
   val category = Physic.otherCategory
   val mask = Physic.otherMask
 }

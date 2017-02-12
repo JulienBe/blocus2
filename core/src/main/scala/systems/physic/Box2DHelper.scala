@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
+import systems.physic.objects.Box2DObject
 import units.briks.Brik
 
 /**
@@ -34,8 +35,8 @@ object Box2DHelper {
   def createCircle(box2DObject: Box2DObject, width: Float, position: Vector2): Body = {
     createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject, position)
   }
-  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle, obj: Object, position: Vector2) = {
-    createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), obj, position)
+  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle, position: Vector2) = {
+    createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), box2DObject, position)
   }
   def addAntennas(ship: Brik): Unit = {
     createAntenna(+15f, -15f, ship)
@@ -63,9 +64,9 @@ object Box2DHelper {
     val b = Physic.world.createBody(createBodyDef(bodyType, position))
     createFixture(b, shape, category, mask, obj)
     shape.dispose()
+//    b.setFixedRotation(true)
     b.setAngularDamping(0)
     b.setAngularVelocity(0)
-    b.setFixedRotation(true)
     b.setGravityScale(0)
     b.setLinearDamping(0)
     b
@@ -75,8 +76,8 @@ object Box2DHelper {
     bodyDef.`type` = bodyType
     bodyDef.allowSleep = false
     position.scl(toBoxUnits(1))
-    if (bodyType == BodyType.DynamicBody)
-      bodyDef.position.set(position)
+//    if (bodyType == BodyType.DynamicBody)
+//      bodyDef.position.set(position)
     bodyDef
   }
   private def createFixture(b: Body, shape: Shape, category: Short, mask: Short, obj: Object) = {
@@ -85,9 +86,9 @@ object Box2DHelper {
     fixtureDef.filter.categoryBits = category
     fixtureDef.filter.maskBits = mask
     fixtureDef.isSensor = true
-    fixtureDef.density = 0
+    fixtureDef.density = 1
     fixtureDef.friction = 0
-    fixtureDef.restitution = 0
+    fixtureDef.restitution = 1
     val fixture = b.createFixture(fixtureDef)
     fixture.setUserData(obj)
     fixture

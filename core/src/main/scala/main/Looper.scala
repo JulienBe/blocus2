@@ -1,8 +1,11 @@
 package main
 
+import brols.TestCase1
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.GL20
 import draw.{GdxProvider, Screener}
+import main.Rome.setScreen
 import systems.physic.{Box2DHelper, Physic}
 import world.World
 
@@ -16,6 +19,8 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   }
 
   def inputs() = {
+    if (Gdx.input.isKeyJustPressed(Keys.J))
+      setScreen(new TestCase1(gdxProvider))
   }
 
   def act(delta: Float) = {
