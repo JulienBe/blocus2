@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx
 import draw.GdxProvider
 import systems.physic.Box2DHelper
 import units.Paddle
-import units.particles.Square
-
-import scala.util.Random
 
 /**
   * Created by julien on 12/02/17.
@@ -14,12 +11,16 @@ import scala.util.Random
 class TestCasePaddle(gdxProvider: GdxProvider) extends TestCase(gdxProvider) {
 
   val paddle = new Paddle
-  paddle.setPos(3, 2)
+  paddle.setPos(2f, 2)
 
   override def render(delta: Float): Unit = {
     super.render(delta)
     if (Gdx.input.justTouched()) {
-      addBall(4, 4, -2, -2)
+      for (i <- 0 until 20) {
+//        addBall(3.5f + i / 10f, 4, -2, -2)
+//        addBall(0 + i / 10f, 4, 2, -2)
+        addBall(1.5f + i / 10f, 4, 0, -2)
+      }
     }
     shapeRenderer.begin()
     val center = V2.getTmp().set(paddle.centerB2D()).scl(Box2DHelper.fromBoxUnits(1))

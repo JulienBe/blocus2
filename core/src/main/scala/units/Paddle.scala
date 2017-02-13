@@ -29,12 +29,12 @@ object Paddle {
   val mask: Short = Physic.playerMask
   val size = new Size(100, 20)
   val bodyType = BodyType.KinematicBody
-  val p1: Vector2 = V2.get(0f,             0f)
-  val p2: Vector2 = V2.get(size.w,         0f)
-  val p3: Vector2 = V2.get(size.w * 0.90f, size.h * 0.75f)
-  val p4: Vector2 = V2.get(size.w * 0.75f, size.h)
-  val p5: Vector2 = V2.get(size.w - p4.x,  size.h)
-  val p6: Vector2 = V2.get(size.w - p3.x,  p3.y)
+  val p1: Vector2 = V2.get(size.w,         0f)
+  val p2: Vector2 = V2.get(size.w * 0.90f, size.h * 0.75f)
+  val p3: Vector2 = V2.get(size.w * 0.75f, size.h)
+  val p4: Vector2 = V2.get(size.w - p3.x,  size.h)
+  val p5: Vector2 = V2.get(size.w - p2.x,  p2.y)
+  val p6: Vector2 = V2.get(0f,             0f)
   val pCenter: Vector2 = V2.get(size.hw, 0)
   val pCenterB2D: Vector2 = V2.get(pCenter.x, pCenter.y).scl(Box2DHelper.toBoxUnits(1))
 
