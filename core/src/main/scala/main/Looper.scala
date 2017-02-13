@@ -1,6 +1,6 @@
 package main
 
-import brols.TestCase1
+import brols.{TestCase1, TestCasePaddle}
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.GL20
@@ -21,6 +21,8 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   def inputs() = {
     if (Gdx.input.isKeyJustPressed(Keys.J))
       setScreen(new TestCase1(gdxProvider))
+    if (Gdx.input.isKeyJustPressed(Keys.K))
+      setScreen(new TestCasePaddle(gdxProvider))
   }
 
   def act(delta: Float) = {

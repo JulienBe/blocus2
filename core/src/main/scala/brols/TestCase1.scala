@@ -24,7 +24,7 @@ class TestCase1(gdxProvider: GdxProvider) extends TestCase(gdxProvider) {
     shapeRenderer.begin()
     for (i <- 0 until testBalls.size) {
       val b = testBalls.get(i)
-      shapeRenderer.line(b.center().scl(Box2DHelper.fromBoxUnits(1)), square.center().scl(Box2DHelper.fromBoxUnits(1)))
+      shapeRenderer.line(b.centerB2D().scl(Box2DHelper.fromBoxUnits(1)), square.centerB2D().scl(Box2DHelper.fromBoxUnits(1)))
     }
     shapeRenderer.end()
   }

@@ -30,7 +30,7 @@ object CollisionResolver extends EventListener {
   }
 
   private def collidingBrik(b: Ball, brik: Brik) = {
-    val angle = V2.getTmp().set(b.center().x - brik.center().x, b.center().y - brik.center().y).angle()
+    val angle = V2.getTmp().set(b.centerB2D().x - brik.centerB2D().x, b.centerB2D().y - brik.centerB2D().y).angle()
     val dir = b.body.getLinearVelocity
     if (angle > Brik.a2 && angle <= Brik.a3)
       collidingOnTheLeftSide(dir)

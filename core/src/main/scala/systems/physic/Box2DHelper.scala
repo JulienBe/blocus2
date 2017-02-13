@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
 import systems.physic.objects.Box2DObject
+import units.Paddle
 import units.briks.Brik
 
 /**
@@ -32,6 +33,9 @@ object Box2DHelper {
     debugRenderer.render(Physic.world, renderMatrix)
   }
 
+  def createPolygon(box2DObject: Box2DObject, vertices: scala.Array[Vector2]): Body = {
+    createBody(box2DObject.bodyType(), createPolygon(vertices), box2DObject.category(), box2DObject.mask(), box2DObject)
+  }
   def createCircle(box2DObject: Box2DObject, width: Float): Body = {
     createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject)
   }
@@ -112,10 +116,13 @@ object Box2DHelper {
     circleShape
   }
 
-  def getPolygon(vertices: scala.Array[Float]): Shape = {
-    val polygon = new PolygonShape()
-    polygon.set(vertices)
-    polygon
+  private def createPolygon(vertices: scala.Array[Vector2]): Shape = {
+    val shape = new PolygonShape()
+    vertices.foreach(
+      _.scl(toBoxUnits(1))
+    )
+    shape.set(vertices)
+    shape
   }
 
   // even are supposed to be horizontal and the following is the corresponding vertical
@@ -127,7 +134,7 @@ object Box2DHelper {
   // | |              | |
   // | 4______________3 |
   // 1/________________\2
-  def getPolygons(r: Rectangle, ppt: Float, offset: Float): Array[Shape] = {
+  private def getPolygons(r: Rectangle, ppt: Float, offset: Float): Array[Shape] = {
     val x = r.x / ppt
     val y = r.y / ppt
     val w = r.width / ppt
@@ -146,12 +153,11 @@ object Box2DHelper {
         p2._1, p2._2, p5._1, p5._2, p6._1, p6._2, p3._1, p3._2,
         p5._1, p5._2, p7._1, p7._2, p8._1, p8._2, p6._1, p6._2,
         p7._1, p7._2, p1._1, p1._2, p4._1, p4._2, p8._1, p8._2
-      ),
-      ppt
+      )
     )
   }
 
-  def getPolygons(vertices: scala.Array[Float], ppt: Float): Array[Shape] = {
+  private def getPolygons(vertices: scala.Array[Float]): Array[Shape] = {
     val shapes = new Array[Shape]()
     for (i <- 0 until vertices.length by 8) {
       val polygon = new PolygonShape()

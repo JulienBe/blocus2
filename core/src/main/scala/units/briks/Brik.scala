@@ -26,7 +26,7 @@ class Brik extends EventListener with Box2DObject with GameObject {
 
   EventHub.registerForCollisions(this)
 
-  override def center(): Vector2 = body.getWorldCenter.add(Brik.size.boxhw, Brik.size.boxhh)
+  override def centerB2D(): Vector2 = body.getWorldCenter.add(Brik.size.boxhw, Brik.size.boxhh)
 
   override def act(delta: Float) = {}
 
