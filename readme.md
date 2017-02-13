@@ -1,3 +1,8 @@
+# Run it
+
+start `sbt`
+type `desktop/run`
+
 # Inner working
 The idea here is to architecture the game around events.
 
