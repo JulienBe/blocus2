@@ -15,12 +15,12 @@ import units.briks.Brik
 object CollisionResolver extends EventListener {
   EventHub.registerForCollisions(this)
 
-  override def heyListen(event: Event) = event match {
+  override def heyListen(event: Event): Unit = event match {
     case ball: BallCollisionEvent => ballColliding(ball)
     case _ => Rome.logUnhandledEvent(event, this)
   }
 
-  def ballColliding(event: BallCollisionEvent) = {
+  def ballColliding(event: BallCollisionEvent): Unit = {
     val b = event.ball
     event.objB match {
       case wall: Wall => collidingWall(b, wall)
@@ -46,18 +46,10 @@ object CollisionResolver extends EventListener {
   private def collidingWall(b: Ball, wall: Wall) = {
     val dir = b.body.getLinearVelocity
     wall.tag match {
-      case Wall.top => {
-        collidingOnTheBottomSide(dir)
-      }
-      case Wall.left => {
-        collidingOnTheRightSide(dir)
-      }
-      case Wall.right => {
-        collidingOnTheLeftSide(dir)
-      }
-      case Wall.bottom => {
-        collidingOnTheTopSide(dir)
-      }
+      case Wall.top => collidingOnTheBottomSide(dir)
+      case Wall.left => collidingOnTheRightSide(dir)
+      case Wall.right => collidingOnTheLeftSide(dir)
+      case Wall.bottom => collidingOnTheTopSide(dir)
     }
     b.setDir(dir)
   }
