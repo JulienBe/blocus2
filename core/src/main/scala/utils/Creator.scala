@@ -1,5 +1,6 @@
 package utils
 
+import brols.V2
 import com.badlogic.gdx.math.Vector2
 import main.Rome
 
@@ -10,37 +11,37 @@ import scala.util.Random
   */
 object Creator {
 
-  private val vector2 = new Vector2()
+  def vectorInScreen(): Vector2 = V2.getTmp().set(floatInBounds(0, Rome.size.w), floatInBounds(0, Rome.size.h))
 
-  def vectorInScreen() = vector2.set(floatInBounds(0, Rome.width), floatInBounds(0, Rome.height))
+  def float: Float = Random.nextFloat
 
-  def float = Random.nextFloat
+  def float(yOffset: Float): Float = float * yOffset
 
-  def degree = Random.nextFloat * 360
+  def degree: Float = float * 360
 
-  def boolean = Random.nextBoolean
+  def boolean: Boolean = Random.nextBoolean
 
-  def int(max: Int) = Random.nextInt(max)
+  def int(max: Int): Int = Random.nextInt(max)
 
-  def floatInBounds(min: Float, max: Float) = min + (Random.nextFloat() * (max - min))
+  def floatInBounds(min: Float, max: Float): Float = min + (float * (max - min))
 
-  def intInBounds(min: Int, max: Int) = min + Random.nextInt(max)
+  def intInBounds(min: Int, max: Int): Int = min + Random.nextInt(max)
 
-  def positiveValueInBounds(min: Float, max: Float) = {
+  def positiveValueInBounds(min: Float, max: Float): Float = {
     if (min < 0) floatInBounds(0, max)
     else floatInBounds(min, max)
   }
 
-  def valueInBoundsWithCheck(min: Float, max: Float, checkMin: Float, checkMax: Float) = {
+  def valueInBoundsWithCheck(min: Float, max: Float, checkMin: Float, checkMax: Float): Float = {
     floatInBounds(if (min < checkMin) checkMin else min, if (max > checkMax) checkMax else max)
   }
 
   /**
     * >= min && < max
     */
-  def testBound(min: Float, max: Float, value: Float) = value >= min && value < max
+  def testBound(min: Float, max: Float, value: Float): Boolean = value >= min && value < max
 
-  def randomIntNot(ceiling: Int, not: Int) = {
+  def randomIntNot(ceiling: Int, not: Int): Int = {
     var rep = Random.nextInt(ceiling)
     if (rep == not)
       rep = (rep + 1) % ceiling

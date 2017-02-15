@@ -14,16 +14,20 @@ trait Box2DObject {
   def bodyType(): BodyType
   def category(): Short
   def mask(): Short
-  def centerX: Float = Box2DHelper.centerScreenX(this)
-  def centerY: Float = Box2DHelper.centerScreenY(this)
-  def centerB2D() = body.getWorldCenter
-  def setDir(vector: Vector2) = body.setLinearVelocity(vector)
-  def setPosBox2D(x: Float, y: Float) = body.setTransform(x, y, 0)
-  def setPosWorld(x: Float, y: Float) = setPosBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
-  def moveWorld(x: Float, y: Float) = {
-    println("move : " + x)
-    moveBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
-  }
-  def moveBox2D(x: Float, y: Float) = body.setTransform(body.getTransform.getPosition.x + x, body.getTransform.getPosition.y + y, body.getAngle)
-  def getDir() = body.getLinearVelocity
+
+  def xScreen(): Float = Box2DHelper.centerScreenX(this)
+  def yScreen(): Float = Box2DHelper.centerScreenY(this)
+  def xB2D(): Float = body.getPosition.x
+  def yB2D(): Float = body.getPosition.y
+  def centerB2D(): Vector2 = body.getWorldCenter
+
+  def setPosBox2D(x: Float, y: Float): Unit = body.setTransform(x, y, 0)
+  def setPosScreen(x: Float, y: Float): Unit = setPosBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
+
+  def moveScreen(x: Float, y: Float): Unit = moveBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
+  def moveBox2D(x: Float, y: Float): Unit = body.setTransform(body.getTransform.getPosition.x + x, body.getTransform.getPosition.y + y, body.getAngle)
+
+  def setDir(vector: Vector2): Unit = setDir(vector.x, vector.y)
+  def setDir(x: Float, y: Float): Unit = body.setLinearVelocity(x, y)
+  def getDir(): Vector2 = body.getLinearVelocity
 }

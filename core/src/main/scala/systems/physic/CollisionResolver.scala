@@ -33,20 +33,22 @@ object CollisionResolver extends EventListener {
   private def collidingPaddle(b: Ball, paddle: Paddle) = {
     val angle = getAngle(b, paddle.centerB2D())
     val dir = b.getDir()
-    val dirAngle = dir.angle()
-//      dir.rotate(180 - (Paddle.p6ToP1Angle - dirAngle))
+    //      dir.rotate(180 - (Paddle.p6ToP1Angle - dirAngle))
     // far right
     if (angle > Paddle.angle1 && angle <= Paddle.angle2)
-      dir.setAngle(Paddle.angle2)
-    if (angle > Paddle.angle2 && angle <= Paddle.angle3)
-      dir.setAngle(Paddle.angle3)
-    if (angle > Paddle.angle3 && angle <= Paddle.angle4)
-      collidingOnTheTopSide(dir)
-    if (angle > Paddle.angle4 && angle <= Paddle.angle5)
-      dir.setAngle(Paddle.angle4)
+      dir.setAngle(Paddle.angleBounceRight)
+    if (angle > Paddle.angle2 && angle <= Paddle.angle5)
+      dir.setAngle((percentageCollision(b, paddle) - Paddle.angle5) * -Paddle.angleRangeNormalBounce)
     if (angle > Paddle.angle5 && angle <= Paddle.angle6)
-      dir.setAngle(Paddle.angle5)
+      dir.setAngle(Paddle.angleBounceLeft)
     b.setDir(dir)
+  }
+
+  private def percentageCollision(b: Ball, paddle: Paddle) = {
+    (((
+      (b.centerB2D().x - paddle.xB2D()) - paddle.halfWidthB2D())
+      / paddle.widthB2D())
+    + 0.5f)
   }
 
   private def collidingBrik(b: Ball, brik: Brik) = {
@@ -79,7 +81,10 @@ object CollisionResolver extends EventListener {
   }
 
   private def collidingOnTheBottomSide(dir: Vector2) = dir.y = -Math.abs(dir.y)
+
   private def collidingOnTheRightSide(dir: Vector2) = dir.x = Math.abs(dir.x)
+
   private def collidingOnTheLeftSide(dir: Vector2) = dir.x = -Math.abs(dir.x)
+
   private def collidingOnTheTopSide(dir: Vector2) = dir.y = Math.abs(dir.y)
 }

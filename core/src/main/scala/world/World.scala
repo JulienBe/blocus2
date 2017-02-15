@@ -17,7 +17,7 @@ object World extends EventListener {
   private val gameObjects = new Array[GameObject]()
 
   EventHub.registerForInputs(this)
-  Wall.surround(1f, 1f, Rome.width - 1f, Rome.height - 1f)
+  Wall.surround(1f, 1f, Rome.size.w - 1f, Rome.size.h - 1f)
 
   def removeBrik(brik: Brik) = gameObjects.removeValue(brik, true)
 
