@@ -20,7 +20,6 @@ object CollisionResolver extends EventListener {
     case _ => Rome.logUnhandledEvent(event, this)
   }
 
-
   def ballColliding(event: BallCollisionEvent): Unit = {
     val b = event.ball
     event.objB match {

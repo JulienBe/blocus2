@@ -1,7 +1,7 @@
 package scala.main
 
 import org.scalatest.FlatSpec
-import systems.Creator
+import utils.Creator
 
 import scala.util.Random
 

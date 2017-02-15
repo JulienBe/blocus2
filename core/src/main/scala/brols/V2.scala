@@ -1,7 +1,7 @@
 package brols
 
 import com.badlogic.gdx.math.Vector2
-import systems.Creator
+import utils.Creator
 
 /**
   * Created by julien on 08/02/17.

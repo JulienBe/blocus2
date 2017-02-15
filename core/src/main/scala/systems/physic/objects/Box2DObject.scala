@@ -18,6 +18,12 @@ trait Box2DObject {
   def centerY: Float = Box2DHelper.centerScreenY(this)
   def centerB2D() = body.getWorldCenter
   def setDir(vector: Vector2) = body.setLinearVelocity(vector)
-  def setPos(x: Float, y: Float) = body.setTransform(x, y, 0)
+  def setPosBox2D(x: Float, y: Float) = body.setTransform(x, y, 0)
+  def setPosWorld(x: Float, y: Float) = setPosBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
+  def moveWorld(x: Float, y: Float) = {
+    println("move : " + x)
+    moveBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
+  }
+  def moveBox2D(x: Float, y: Float) = body.setTransform(body.getTransform.getPosition.x + x, body.getTransform.getPosition.y + y, body.getAngle)
   def getDir() = body.getLinearVelocity
 }

@@ -1,12 +1,14 @@
 package units
 
 import brols.{Size, V2}
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.{MathUtils, Vector2}
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.physic.objects.Box2DObject
 import systems.physic.{Box2DHelper, Physic}
+import utils.MyMathUtils
 
 /**
   * Created by julien on 11/02/17.
@@ -18,13 +20,19 @@ class Paddle extends GameObject with Box2DObject {
   override def category(): Short = Paddle.category
   override def mask(): Short = Paddle.mask
   override def centerB2D(): Vector2 = V2.getTmp().set(body.getWorldCenter.x + Paddle.pCenterB2D.x, body.getWorldCenter.y)
+  override def centerX: Float = super.centerX + Paddle.size.hw
 
-  override def act(delta: Float): Unit = {}
+  override def act(delta: Float): Unit = {
+    moveWorld(MyMathUtils.ceil((Gdx.input.getX - centerX), Paddle.speed * delta), 0)
+  }
   override def draw(batch: SpriteBatch): Unit = {}
 
 }
 
 object Paddle {
+  val speed = 1200f
+  val yB2D = 2
+  val y = Box2DHelper.fromBoxUnits(yB2D)
   val category: Short = Physic.playerCategory
   val mask: Short = Physic.playerMask
   val size = new Size(100, 20)

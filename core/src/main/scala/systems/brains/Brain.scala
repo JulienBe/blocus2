@@ -1,7 +1,7 @@
 package systems.brains
 
 import com.badlogic.gdx.math.Vector2
-import systems.Creator
+import utils.Creator
 
 /**
   * Created by julien on 29/01/17.
