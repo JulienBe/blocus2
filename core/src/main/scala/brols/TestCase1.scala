@@ -12,8 +12,7 @@ import scala.util.Random
   */
 class TestCase1(gdxProvider: GdxProvider) extends TestCase(gdxProvider) {
 
-  val square = new Brik
-  square.body.setTransform(2, 4, 0)
+  val square = new Brik(2, 4)
 
   override def render(delta: Float): Unit = {
     super.render(delta)
@@ -36,13 +35,13 @@ class TestCase1(gdxProvider: GdxProvider) extends TestCase(gdxProvider) {
       addBall(1, 4.5f + i / 10f, 2, -2)
     for (i <- 0 until 5)
       addBall(3.5f, 5.5f + i / 10f, -2, -2)
-    addBall(Box2DHelper.toBoxUnits(square.centerX) - 2, Box2DHelper.toBoxUnits(square.centerY) + 0.2f, 1, 0)
-    addBall(Box2DHelper.toBoxUnits(square.centerX) + 2, Box2DHelper.toBoxUnits(square.centerY) + 0.2f, -1, 0)
+    addBall(Box2DHelper.toBoxUnits(square.xScreen) - 2, Box2DHelper.toBoxUnits(square.yScreen) + 0.2f, 1, 0)
+    addBall(Box2DHelper.toBoxUnits(square.xScreen) + 2, Box2DHelper.toBoxUnits(square.yScreen) + 0.2f, -1, 0)
     for (i <- 0 until 10)
-      addBall(-0.2f + Box2DHelper.toBoxUnits(square.centerX) + i / 10f, Box2DHelper.toBoxUnits(square.centerY) - 2, 0, 1)
+      addBall(-0.2f + Box2DHelper.toBoxUnits(square.xScreen) + i / 10f, Box2DHelper.toBoxUnits(square.yScreen) - 2, 0, 1)
     // Top, min 45, max 90
     for (i <- 0 until 10)
-      addBall(-0.2f + Box2DHelper.toBoxUnits(square.centerX) + i / 10f, Box2DHelper.toBoxUnits(square.centerY) + 2, 0, -1)
+      addBall(-0.2f + Box2DHelper.toBoxUnits(square.xScreen) + i / 10f, Box2DHelper.toBoxUnits(square.yScreen) + 2, 0, -1)
   }
 
 }

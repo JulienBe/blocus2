@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 import main.Rome
 import systems.physic.objects.Box2DObject
-import units.Paddle
 import units.briks.Brik
 
 /**
@@ -14,20 +13,23 @@ import units.briks.Brik
   */
 object Box2DHelper {
 
+
   private val vector2 = new Vector2()
   private val debugRenderer = new Box2DDebugRenderer()
 
-  def toBoxUnits(f: Float) = f / Rome.ppm
-  def fromBoxUnits(f: Float) = f * Rome.ppm
+  def removeBody(box2DObject: Box2DObject): Unit = Physic.bodyToClean(box2DObject.body)
 
-  def setPos(ship: Brik, x: Float, y: Float) = {
+  def toBoxUnits(f: Float): Float = f / Rome.ppm
+  def fromBoxUnits(f: Float): Float = f * Rome.ppm
+
+  def setPos(ship: Brik, x: Float, y: Float): Unit = {
     ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
   }
 
-  def centerScreenX(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.x)
-  def centerScreenY(box2DObject: Box2DObject) = fromBoxUnits(box2DObject.body.getPosition.y)
+  def centerScreenX(box2DObject: Box2DObject): Float = fromBoxUnits(box2DObject.body.getPosition.x)
+  def centerScreenY(box2DObject: Box2DObject): Float = fromBoxUnits(box2DObject.body.getPosition.y)
 
-  def debugRender(matrix4: Matrix4) = {
+  def debugRender(matrix4: Matrix4): Unit = {
     val renderMatrix = new Matrix4(matrix4)
     renderMatrix.scale(Rome.ppm, Rome.ppm, 1)
     debugRenderer.render(Physic.world, renderMatrix)
@@ -39,7 +41,7 @@ object Box2DHelper {
   def createCircle(box2DObject: Box2DObject, width: Float): Body = {
     createBody(box2DObject.bodyType(), createCircleShape(width), box2DObject.category(), box2DObject.mask(), box2DObject)
   }
-  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle) = {
+  def createRectangle(box2DObject: Box2DObject, rectangle: Rectangle): Body = {
     createBody(box2DObject.bodyType(), createRectangleShape(rectangle), box2DObject.category(), box2DObject.mask(), box2DObject)
   }
   def addAntennas(ship: Brik): Unit = {
@@ -159,7 +161,7 @@ object Box2DHelper {
 
   private def getPolygons(vertices: scala.Array[Float]): Array[Shape] = {
     val shapes = new Array[Shape]()
-    for (i <- 0 until vertices.length by 8) {
+    for (i <- vertices.indices by 8) {
       val polygon = new PolygonShape()
       polygon.set(scala.Array(
         vertices(i), vertices(i + 1), vertices(i + 2), vertices(i + 3),

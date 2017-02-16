@@ -8,5 +8,5 @@ import systems.eventhub.events.Event
   */
 trait EventListener {
   def heyListen(event: Event)
-  def unhandled(event: Event) = Rome.logUnhandledEvent(event, this)
+  protected def unhandled(event: Event) = Rome.logUnhandledEvent(event, this)
 }

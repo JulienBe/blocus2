@@ -28,7 +28,7 @@ abstract class TestCase(gdxProvider: GdxProvider) extends Screener(gdxProvider) 
     for (i <- 0 until testBalls.size) {
       val b = testBalls.get(i)
       b.act(delta)
-      traces.add(Square.get(b.centerX + 1, b.centerY + 1))
+      traces.add(Square.get(b.xScreen + 1, b.yScreen + 1))
     }
     for (i <- 0 until traces.size)
       traces.get(i).draw(spriteBatch)

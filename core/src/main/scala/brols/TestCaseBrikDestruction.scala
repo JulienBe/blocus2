@@ -1,37 +1,52 @@
 package brols
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.utils.Array
 import draw.GdxProvider
-import systems.physic.Box2DHelper
+import systems.eventhub.events.{DestroyBrik, Event}
+import systems.eventhub.{EventHub, EventListener}
 import units.Paddle
+import units.balls.Ball
+import units.briks.Brik
 
 /**
   * Created by julien on 12/02/17.
   */
-class TestCasePaddle(gdxProvider: GdxProvider) extends TestCase(gdxProvider) {
+class TestCaseBrikDestruction(gdxProvider: GdxProvider) extends TestCase(gdxProvider) with EventListener {
 
-  val paddle = new Paddle
-  paddle.setPosBox2D(2f, 2)
+  EventHub.registerForDestroy(_)
+
+  val paddle: Paddle = Paddle.get()
+
+  val ball: Ball = Ball.get()
+  ball.setDir(-1, -1)
+  ball.setPosBox2D(Paddle.defaultXB2D + 1, Paddle.yB2D + 1)
+
+  val briks = new Array[Brik]()
+  for (i <- 0 until 10) {
+    briks.add(Brik.getB2B(i * Brik.size.wB2D, 4))
+  }
 
   override def render(delta: Float): Unit = {
     super.render(delta)
     if (Gdx.input.justTouched()) {
-      for (i <- 0 until 20) {
-//        addBall(3.5f + i / 10f, 4, -2, -2)
-//        addBall(0 + i / 10f, 4, 2, -2)
-        addBall(1.5f + i / 10f, 4, 0, -2)
-      }
     }
-    shapeRenderer.begin()
-    val center = V2.getTmp().set(paddle.centerB2D()).scl(Box2DHelper.fromBoxUnits(1))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle1).add(center))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle2).add(center))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle3).add(center))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle4).add(center))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle5).add(center))
-    shapeRenderer.line(center, V2.get(60, 0).rotate(Paddle.angle6).add(center))
-    shapeRenderer.end()
     paddle.act(delta)
+    ball.act(delta)
+    for (i <- 0 until briks.size) {
+      val b = briks.get(i)
+      b.act(delta)
+    }
+
+    spriteBatch.begin()
+    ball.draw(spriteBatch)
+    spriteBatch.end()
   }
 
+  override def heyListen(event: Event): Unit = {
+    event match {
+      case destroyBrik: DestroyBrik => briks.removeValue(destroyBrik.brik, true)
+      case _ => unhandled(event)
+    }
+  }
 }
