@@ -1,13 +1,13 @@
-package systems.physic
+package systems.physic.resolvers
 
 import brols.V2
 import com.badlogic.gdx.math.Vector2
 import main.Rome
-import systems.eventhub.{EventHub, EventListener}
 import systems.eventhub.events.{BallCollisionEvent, Event}
-import units.{Paddle, Wall}
+import systems.eventhub.{EventHub, EventListener}
 import units.balls.Ball
 import units.briks.Brik
+import units.{Paddle, Wall}
 
 /**
   * Created by julien on 11/02/17.
@@ -48,7 +48,7 @@ object CollisionResolver extends EventListener {
     (((
       (b.centerB2D().x - paddle.xB2D()) - paddle.halfWidthB2D())
       / paddle.widthB2D())
-    + 0.5f)
+      + 0.5f)
   }
 
   private def collidingBrik(b: Ball, brik: Brik) = {
@@ -81,10 +81,7 @@ object CollisionResolver extends EventListener {
   }
 
   private def collidingOnTheBottomSide(dir: Vector2) = dir.y = -Math.abs(dir.y)
-
   private def collidingOnTheRightSide(dir: Vector2) = dir.x = Math.abs(dir.x)
-
   private def collidingOnTheLeftSide(dir: Vector2) = dir.x = -Math.abs(dir.x)
-
   private def collidingOnTheTopSide(dir: Vector2) = dir.y = Math.abs(dir.y)
 }

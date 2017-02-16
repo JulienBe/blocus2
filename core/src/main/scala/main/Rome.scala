@@ -7,7 +7,7 @@ import draw.{GdxProvider, Textures}
 import systems.MyInputProcessor
 import systems.eventhub.EventListener
 import systems.eventhub.events.Event
-import systems.physic.{CollisionResolver, ImperialDestroyer}
+import systems.physic.resolvers.{CollisionResolver, ImperialDestroyer}
 
 object Rome extends Game {
 

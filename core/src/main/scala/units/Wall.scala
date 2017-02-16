@@ -3,6 +3,7 @@ package units
 import brols.Size
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.{Rectangle, Vector2}
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.utils.Array
 import systems.physic.objects.Edge
@@ -15,19 +16,19 @@ class Wall(val rectangle: Rectangle, collisionMultiplier: Vector2, val tag: Int)
   override def bodyType(): BodyType = Wall.bodyType
   override def category(): Short = Wall.category
   override def mask(): Short = Wall.mask
-  override def createBody = Box2DHelper.createRectangle(this, rectangle)
-  override def act(delta: Float) = {}
-  override def draw(batch: SpriteBatch) = {}
+  override def createBody(): Body = Box2DHelper.createRectangle(this, rectangle)
+  override def act(delta: Float): Unit = {}
+  override def draw(batch: SpriteBatch): Unit = {}
 }
 
 object Wall {
 
-  val bottom = Edge.bottom
-  val top = Edge.top
-  val left = Edge.left
-  val right = Edge.right
-  val category = Physic.otherCategory
-  val mask = Physic.otherMask
+  val bottom: Int = Edge.bottom
+  val top: Int = Edge.top
+  val left: Int = Edge.left
+  val right: Int = Edge.right
+  val category: Short = Physic.otherCategory
+  val mask: Short = Physic.otherMask
   val size = new Size(2, 2)
   val bodyType = BodyType.StaticBody
   private val yCollisionInverter = new Vector2(1, -1)
@@ -42,5 +43,4 @@ object Wall {
     array.add(new Wall(rectangles(right), xCollisionInverter, right))
     array
   }
-
 }

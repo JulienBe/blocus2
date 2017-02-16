@@ -10,16 +10,13 @@ class MyInputProcessor extends InputAdapter {
 
   private def y(screenY: Int) = Gdx.graphics.getHeight - screenY
 
-  // touched
   override def touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean = {
     EventHub.mouseMoved(screenX, y(screenY))
     true
   }
 
-  // justTouched
   override def touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = {
     EventHub.justTouched(screenX, y(screenY))
     true
   }
-
 }

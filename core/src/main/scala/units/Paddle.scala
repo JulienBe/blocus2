@@ -31,7 +31,6 @@ class Paddle extends GameObject with Box2DObject {
     moveScreen(MyMathUtils.ceil(Gdx.input.getX - xScreen, Paddle.speed * delta), (Paddle.y - yScreen()) * delta * Paddle.anchorStrenght)
   }
   override def draw(batch: SpriteBatch): Unit = {}
-
 }
 
 object Paddle {
@@ -47,8 +46,6 @@ object Paddle {
   val bodyType = BodyType.KinematicBody
   val p1: Vector2 = V2.get(size.w,         0f)
   val p2: Vector2 = V2.get(size.w * 0.92f, size.h)
-//  val p3: Vector2 = V2.get(size.w * 0.75f, size.h)
-//  val p4: Vector2 = V2.get(size.w - p3.x,  size.h)
   val p5: Vector2 = V2.get(size.w - p2.x,  p2.y)
   val p6: Vector2 = V2.get(0f,             0f)
   val pCenter: Vector2 = V2.get(size.hw,   0)
@@ -56,8 +53,6 @@ object Paddle {
 
   val angle1: Float = V2.getTmp(p1).sub(pCenter).angle()
   val angle2: Float = V2.getTmp(p2).sub(pCenter).angle()
-//  val angle3: Float = V2.getTmp(p3).sub(pCenter).angle()
-//  val angle4: Float = V2.getTmp(p4).sub(pCenter).angle()
   val angle5: Float = V2.getTmp(p5).sub(pCenter).angle()
   val angle6: Float = V2.getTmp(p6).sub(pCenter).angle()
   val angleRangeNormalBounce: Float = angle5 - angle2

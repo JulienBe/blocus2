@@ -2,7 +2,7 @@ package systems.physic
 
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.{Color, OrthographicCamera}
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.{Matrix4, Vector2}
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
 
@@ -21,7 +21,7 @@ object Physic {
   private val bodiesToDeactivate = new Array[Body]()
   private val gravity = new Vector2(0, 0)
 
-  val world = new World(gravity, true)
+  private[physic] val world = new World(gravity, true)
   world.setContactListener(new CollisionMaster)
 
   private val rayHandler = new RayHandler(world)
@@ -33,7 +33,7 @@ object Physic {
 
   private var accumulator = 0f
 
-  def render(delta: Float, cam: OrthographicCamera) = {
+  def render(delta: Float, cam: OrthographicCamera): Unit = {
     rayHandler.setCombinedMatrix(cam)
     rayHandler.updateAndRender()
   }
@@ -47,14 +47,14 @@ object Physic {
       world.step(timestep, velocityIteration, positionIteration)
       accumulator -= timestep
     }
-    doForAllBodies(world.destroyBody(_), bodiesToClean)
+    doForAllBodies(world.destroyBody, bodiesToClean)
     sleepAllBodies(bodiesToDeactivate)
     val bodies = new Array[Body]()
     world.getBodies(bodies)
   }
 
-  def bodyToClean(body: Body) = bodiesToClean.add(body)
-  def bodyToSleep(body: Body) = bodiesToDeactivate.add(body)
+  def bodyToClean(body: Body): Unit = bodiesToClean.add(body)
+  def bodyToSleep(body: Body): Unit = bodiesToDeactivate.add(body)
 
   private def doForAllBodies(methodToBodies: (Body) => Unit, bodies: Array[Body]) = {
     for (i <- 0 until bodies.size)

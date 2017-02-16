@@ -8,7 +8,7 @@ import units.balls.Ball
   * Created by julien on 24/01/17.
   */
 class CollisionMaster extends ContactListener {
-  override def preSolve(c: Contact, oldManifold: Manifold) = {}
+  override def preSolve(c: Contact, oldManifold: Manifold): Unit = {}
   override def postSolve(contact: Contact, impulse: ContactImpulse): Unit = {}
   override def endContact(c: Contact): Unit = {}
 
@@ -20,9 +20,8 @@ class CollisionMaster extends ContactListener {
     ball(dataB, dataA, c)
   }
 
-  def ball(obj: Object, other: Object, contact: Contact) = obj match {
+  private def ball(obj: Object, other: Object, contact: Contact): Unit = obj match {
     case ball: Ball => EventHub.ballCollision(ball, other, contact)
     case _ =>
   }
-
 }

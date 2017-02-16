@@ -36,7 +36,6 @@ class Ball extends Box2DObject with GameObject {
   override def draw(batch: SpriteBatch): Unit = {
     batch.draw(Textures.ball, Box2DHelper.centerScreenX(this) - Ball.size.qw, Box2DHelper.centerScreenY(this) - Ball.size.qh, Ball.size.w, Ball.size.h)
   }
-
 }
 
 object Ball {

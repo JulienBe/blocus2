@@ -13,7 +13,6 @@ import units.briks.Brik
   */
 object Box2DHelper {
 
-
   private val vector2 = new Vector2()
   private val debugRenderer = new Box2DDebugRenderer()
 
@@ -109,13 +108,6 @@ object Box2DHelper {
     val center = new Vector2(toBoxUnits(rectangle.x + rectangle.width * 0.5f), toBoxUnits(rectangle.y + rectangle.height * 0.5f))
     polygon.setAsBox((rectangle.width * 0.5f) / Rome.ppm, (rectangle.height * 0.5f) / Rome.ppm, center, 0.0f)
     polygon
-  }
-
-  private def getCircle(radius: Float, x: Float, y: Float, ppt: Float): Shape = {
-    val circleShape = new CircleShape()
-    circleShape.setRadius(radius / ppt)
-    circleShape.setPosition(new Vector2((x + radius) / ppt, (y + radius) / ppt))
-    circleShape
   }
 
   private def createPolygon(vertices: scala.Array[Vector2]): Shape = {

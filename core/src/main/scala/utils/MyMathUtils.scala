@@ -10,7 +10,6 @@ object MyMathUtils {
       return max
     if (f < -max)
       return -max
-    return f
+    f
   }
-
 }
