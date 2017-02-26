@@ -12,6 +12,7 @@ import systems.physic.resolvers.{CollisionResolver, ImperialDestroyer}
 object Rome extends Game {
 
   private val unhandledEvent = "Unhandled Event"
+  private val unhandledObject = "Unhandled Object"
 
   val ppm = 80
   var time = 0f
@@ -33,5 +34,7 @@ object Rome extends Game {
 
   def logUnhandledEvent(event: Event, from: EventListener): Unit =
     Gdx.app.debug(Rome.unhandledEvent, from + " :: " + event)
+  def log(value: Any, s: String): Unit =
+    Gdx.app.debug(unhandledObject, s + " :: " + value)
 
 }

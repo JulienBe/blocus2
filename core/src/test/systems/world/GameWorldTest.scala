@@ -1,4 +1,4 @@
-package world
+package systems.world
 
 import org.scalatest.FlatSpec
 

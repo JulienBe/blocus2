@@ -1,4 +1,4 @@
-package brols
+package main.tests
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array

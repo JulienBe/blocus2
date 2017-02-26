@@ -10,6 +10,7 @@ import systems.eventhub.events.{BallCollisionEvent, Event}
 import systems.eventhub.{EventHub, EventListener}
 import systems.physic.objects.Box2DObject
 import systems.physic.{Box2DHelper, Physic}
+import systems.world.Level
 import units.GameObject
 import utils.Creator
 
@@ -60,7 +61,7 @@ object Brik {
 
   val yStart: Float = Rome.size.hB2D * 2
   val yOffset: Float = yStart / 2
-  val size = new Size(Rome.size.w / 10, 20)
+  val size = new Size(Rome.size.w / Level.brikPerRow, 20)
   val anchorStrength = 3
 
   val a1: Float = new Vector2(size.hw, size.hh).angle()
@@ -72,8 +73,8 @@ object Brik {
   val category: Short = Physic.otherCategory
   val mask: Short = Physic.otherMask
 
-  def getScreen(xCenterScreen: Float, yCenterScreen: Float): Brik = {
-    getB2B(Box2DHelper.toBoxUnits(xCenterScreen), Box2DHelper.toBoxUnits(yCenterScreen))
+  def getScreen(xScreen: Float, yCenter: Float): Brik = {
+    getB2B(Box2DHelper.toBoxUnits(xScreen), Box2DHelper.toBoxUnits(yCenter))
   }
 
   def getB2B(xB2B: Float, yB2B: Float): Brik = {

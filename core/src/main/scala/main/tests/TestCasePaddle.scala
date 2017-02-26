@@ -1,5 +1,6 @@
-package brols
+package main.tests
 
+import brols.V2
 import com.badlogic.gdx.Gdx
 import draw.GdxProvider
 import systems.physic.Box2DHelper

@@ -1,22 +1,34 @@
 package main
 
-import brols.{TestCase1, TestCaseBrikDestruction, TestCasePaddle}
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.GL20
 import draw.{GdxProvider, Screener}
 import main.Rome.setScreen
+import main.tests.{TestCase1, TestCaseBrikDestruction, TestCasePaddle}
 import systems.physic.{Box2DHelper, Physic}
-import world.World
+import systems.world.{GameState, World}
 
 class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxProvider {
 
+  var state = GameState.NotStarted
+
   override def render(delta: Float): Unit = {
+    state match {
+      case GameState.NotStarted => notStartedLoop(delta)
+      case GameState.Playing => playingLoop(delta)
+      case GameState.Paused => pausedLoop(delta)
+    }
     inputs()
-    act(delta)
     draw()
     Physic.doPhysicsStep(delta)
   }
+
+  def notStartedLoop(delta: Float) = {}
+  def playingLoop(delta: Float) = {
+    act(delta)
+  }
+  def pausedLoop(delta: Float) = {}
 
   def inputs(): Unit = {
     if (Gdx.input.isKeyJustPressed(Keys.J))
@@ -25,6 +37,10 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
       setScreen(new TestCasePaddle(gdxProvider))
     if (Gdx.input.isKeyJustPressed(Keys.L))
       setScreen(new TestCaseBrikDestruction(gdxProvider))
+    if (Gdx.input.isKeyJustPressed(Keys.S))
+      World.loadLevel(1)
+    if (Gdx.input.justTouched())
+      state = GameState.Playing
   }
 
   def act(delta: Float): Unit = {

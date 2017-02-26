@@ -1,5 +1,6 @@
-package brols
+package main.tests
 
+import brols.V2
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.GL20
