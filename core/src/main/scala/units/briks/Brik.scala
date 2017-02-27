@@ -17,7 +17,7 @@ import utils.Creator
 /**
   * Created by julien on 23/01/17.
   */
-class Brik(anchorX: Float, anchorY: Float) extends EventListener with Box2DObject with GameObject {
+class Brik(val anchorX: Float, var anchorY: Float) extends EventListener with Box2DObject with GameObject {
 
   setPosBox2D(Rome.size.hwB2D + (Rome.size.hwB2D - anchorX), Brik.yStart + Creator.float(Brik.yOffset))
   EventHub.registerForCollisions(this)
@@ -62,7 +62,7 @@ object Brik {
   val yStart: Float = Rome.size.hB2D * 2
   val yOffset: Float = yStart / 2
   val size = new Size(Rome.size.w / Level.brikPerRow, 20)
-  val anchorStrength = 3
+  val anchorStrength = 5
 
   val a1: Float = new Vector2(size.hw, size.hh).angle()
   val a2: Float = new Vector2(-size.hw, size.hh).angle()

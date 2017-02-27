@@ -40,13 +40,19 @@ class Ball extends Box2DObject with GameObject {
 
 object Ball {
 
+  val speed = 2
   val bodyType = BodyType.DynamicBody
   val size = new Size(16, 16)
   val defaultXB2B: Float = Paddle.defaultXB2D + 1
-  val defaultYB2B: Float = Paddle.y + 1
-  val defaultDir: Vector2 = V2.get(-1, -1)
+  val defaultYB2B: Float = Paddle.yB2D + 1
+  val defaultDir: Vector2 = V2.get(-1, -1).scl(speed)
   val category: Short = Physic.otherCategory
   val mask: Short = Physic.otherMask
 
-  def get(): Ball = new Ball
+  def get(): Ball = {
+    val b = new Ball
+    b.setPosBox2D(defaultXB2B, defaultYB2B)
+    b.setDir(defaultDir)
+    b
+  }
 }

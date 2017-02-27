@@ -15,7 +15,6 @@ object Rome extends Game {
   private val unhandledObject = "Unhandled Object"
 
   val ppm = 80
-  var time = 0f
   var size: Size = _
   val screenCenter = new Vector2(0, 0)
 

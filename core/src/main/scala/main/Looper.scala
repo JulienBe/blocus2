@@ -21,10 +21,14 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
     }
     inputs()
     draw()
-    Physic.doPhysicsStep(delta)
   }
 
-  def notStartedLoop(delta: Float) = {}
+  def notStartedLoop(delta: Float) = {
+    World.beforeBeginAct(delta)
+    spriteBatch.begin()
+    World.beforeBeginDraw(spriteBatch)
+    spriteBatch.end()
+  }
   def playingLoop(delta: Float) = {
     act(delta)
   }
@@ -44,8 +48,8 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   }
 
   def act(delta: Float): Unit = {
-    Rome.time += delta
     World.act(delta)
+    Physic.doPhysicsStep(delta)
   }
 
   private def draw() = {

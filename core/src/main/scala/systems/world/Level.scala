@@ -13,13 +13,40 @@ import units.briks.Brik
   */
 class Level {
 
+  val rowTimer = 5f
   val briks = new Array[Brik]()
+  var trigger = 0f
+
+  def beforeBeginAct(delta: Float) = {
+    actBrik(delta)
+  }
+
+  def act(delta: Float) = {
+    actBrik(delta)
+    if (trigger < World.time) {
+      rowDrop()
+      trigger = World.time + rowTimer
+    }
+  }
+
+  def rowDrop() = {
+    for (i <- 0 until briks.size) {
+      val b = briks.get(i)
+      b.anchorY -= Brik.size.hB2D
+    }
+  }
+
+  private def actBrik(delta: Float) = {
+    for (i <- 0 until briks.size)
+      briks.get(i).act(delta)
+  }
 
   def load(number: Int) = {
     val map = new TmxMapLoader().load("levels/level" + number + ".tmx")
     val briksObjects = map.getLayers.get(Level.brikLayer).getObjects
     for (i <- 0 until briksObjects.getCount)
       processMapObject(briksObjects, i)
+    trigger = rowTimer
   }
 
   private def processMapObject(briksObjects: MapObjects, i: Int) = {
