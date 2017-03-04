@@ -3,7 +3,7 @@ package systems.world
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Array
 import main.Rome
-import systems.eventhub.events.Event
+import systems.eventhub.events.{DestroyBall, DestroyBrik, Event}
 import systems.eventhub.{EventHub, EventListener}
 import units.balls.Ball
 import units.{Paddle, Wall}
@@ -18,8 +18,12 @@ object World extends EventListener {
   private val balls = new Array[Ball]()
   var time = 0f
 
-  EventHub.registerForInputs(this)
+  EventHub.registerForDestroy(this)
   Wall.surround(1f, 1f, Rome.size.w - 1f, Rome.size.h - 1f)
+
+  def reset() = {
+    level.reset()
+  }
 
   def loadLevel(number: Int) = {
     level.load(number)
@@ -27,7 +31,7 @@ object World extends EventListener {
 
   def beforeBeginAct(delta: Float) = {
     level.beforeBeginAct(delta)
-    if (balls.size == 0)
+    if (noMoreBalls)
       balls.add(Ball.get())
     paddle.act(delta)
   }
@@ -53,6 +57,16 @@ object World extends EventListener {
   }
 
   override def heyListen(event: Event): Unit = event match {
+    case destroyBrik: DestroyBrik => level.removeBrik(destroyBrik.brik)
+    case destroyBall: DestroyBall => {
+      balls.removeValue(destroyBall.ball, true)
+      if (noMoreBalls)
+        EventHub.lost()
+    }
     case _ => unhandled(event)
+  }
+
+  private def noMoreBalls = {
+    balls.size == 0
   }
 }

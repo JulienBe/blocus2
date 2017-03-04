@@ -1,4 +1,4 @@
-package systems
+package systems.inputs
 
 import com.badlogic.gdx.{Gdx, InputAdapter}
 import systems.eventhub.EventHub

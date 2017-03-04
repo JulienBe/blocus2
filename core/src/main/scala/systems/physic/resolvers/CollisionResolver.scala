@@ -75,7 +75,7 @@ object CollisionResolver extends EventListener {
       case Wall.top => collidingOnTheBottomSide(dir)
       case Wall.left => collidingOnTheRightSide(dir)
       case Wall.right => collidingOnTheLeftSide(dir)
-      case Wall.bottom => collidingOnTheTopSide(dir)
+      case Wall.bottom => EventHub.lostBall(b)
     }
     b.setDir(dir)
   }

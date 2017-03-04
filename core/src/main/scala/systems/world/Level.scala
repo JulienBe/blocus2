@@ -17,6 +17,16 @@ class Level {
   val briks = new Array[Brik]()
   var trigger = 0f
 
+  def reset() = {
+    while (briks.size != 0)
+      briks.pop().destroy
+    trigger = 0f
+  }
+
+  def removeBrik(brik: Brik) = {
+    briks.removeValue(brik, true)
+  }
+
   def beforeBeginAct(delta: Float) = {
     actBrik(delta)
   }

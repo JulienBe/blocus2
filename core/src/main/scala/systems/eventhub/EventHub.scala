@@ -12,10 +12,12 @@ import scala.collection.mutable
   */
 object EventHub {
 
+  private val gameListener: mutable.MutableList[EventListener] = mutable.MutableList()
   private val inputsListener: mutable.MutableList[EventListener] = mutable.MutableList()
   private val destroyListener: mutable.MutableList[EventListener] = mutable.MutableList()
   private val collisionsListener: mutable.MutableList[EventListener] = mutable.MutableList()
 
+  def registerForGame(eventListener: EventListener): mutable.MutableList[EventListener] = addListener(eventListener, gameListener)
   def registerForInputs(eventListener: EventListener): mutable.MutableList[EventListener] = addListener(eventListener, inputsListener)
   def registerForDestroy(eventListener: EventListener): mutable.MutableList[EventListener] = addListener(eventListener, destroyListener)
   def registerForCollisions(eventListener: EventListener): mutable.MutableList[EventListener] = addListener(eventListener, collisionsListener)
@@ -23,9 +25,11 @@ object EventHub {
   private def addListener(eventListener: EventListener, mutableList: mutable.MutableList[EventListener]) = mutableList.+=(eventListener)
 
   private def tell(obj: Any) = obj match {
-    case touched: TouchedEvent => inputsListener.foreach(_.heyListen(touched))
-    case brikEvent: DestroyBrik => destroyListener.foreach(_.heyListen(brikEvent))
-    case justTouched: JustTouchedEvent => inputsListener.foreach(_.heyListen(justTouched))
+    case gameLost: GameLost             => gameListener.foreach(_.heyListen(gameLost))
+    case touched: TouchedEvent          => inputsListener.foreach(_.heyListen(touched))
+    case justTouched: JustTouchedEvent  => inputsListener.foreach(_.heyListen(justTouched))
+    case brikEvent: DestroyBrik         => destroyListener.foreach(_.heyListen(brikEvent))
+    case ballEvent: DestroyBall         => destroyListener.foreach(_.heyListen(ballEvent))
     case collisionEvent: CollisionEvent => collisionsListener.foreach(_.heyListen(collisionEvent))
   }
 
@@ -33,4 +37,6 @@ object EventHub {
   def justTouched(x: Int, y: Int): Unit = tell(new JustTouchedEvent(x, y))
   def ballCollision(ball: Ball, objB: Object, contact: Contact): Unit = tell(new BallCollisionEvent(ball, objB, contact))
   def destroy(brik: Brik): Unit = tell(new DestroyBrik(brik))
+  def lostBall(b: Ball) = tell(new DestroyBall(b))
+  def lost() = tell(new GameLost)
 }

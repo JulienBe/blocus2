@@ -51,9 +51,12 @@ class Brik(val anchorX: Float, var anchorY: Float) extends EventListener with Bo
   private def collidingWithBall(ballEvent: BallCollisionEvent) = {
     if (ballEvent.objB.equals(this)) {
       hp -= 1
-      EventHub.destroy(this)
+      destroy
     }
   }
+
+  def destroy = EventHub.destroy(this)
+
 }
 
 object Brik {

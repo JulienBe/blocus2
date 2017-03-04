@@ -2,11 +2,12 @@ package main
 
 import brols.Size
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.{Game, Gdx}
+import com.badlogic.gdx.{Game, Gdx, InputMultiplexer}
 import draw.{GdxProvider, Textures}
-import systems.MyInputProcessor
 import systems.eventhub.EventListener
 import systems.eventhub.events.Event
+import systems.gameloop.Looper
+import systems.inputs.MyInputProcessor
 import systems.physic.resolvers.{CollisionResolver, ImperialDestroyer}
 
 object Rome extends Game {
@@ -25,7 +26,9 @@ object Rome extends Game {
 
   override def create(): Unit = {
     setScreen(new Looper(new GdxProvider {}))
-    Gdx.input.setInputProcessor(new MyInputProcessor())
+    val inputs = new InputMultiplexer()
+    inputs.addProcessor(new MyInputProcessor)
+    Gdx.input.setInputProcessor(inputs)
     CollisionResolver
     ImperialDestroyer
     Textures.loadAssets()
