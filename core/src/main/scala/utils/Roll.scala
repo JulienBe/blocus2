@@ -9,7 +9,7 @@ import scala.util.Random
 /**
   * Created by julien on 10/07/16.
   */
-object Creator {
+object Roll {
 
   def vectorInScreen(): Vector2 = V2.getTmp().set(floatInBounds(0, Rome.size.w), floatInBounds(0, Rome.size.h))
 

@@ -3,9 +3,10 @@ package systems.world
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Array
 import main.Rome
-import systems.eventhub.events.{DestroyBall, DestroyBrik, Event}
+import systems.eventhub.events._
 import systems.eventhub.{EventHub, EventListener}
 import units.balls.Ball
+import units.bonuses.Bonus
 import units.{Paddle, Wall}
 
 /**
@@ -16,13 +17,17 @@ object World extends EventListener {
   private val level = new Level
   private val paddle = new Paddle
   private val balls = new Array[Ball]()
+  private val bonuses = new Array[Bonus]()
   var time = 0f
 
   EventHub.registerForDestroy(this)
+  EventHub.registerForGame(this)
   Wall.surround(1f, 1f, Rome.size.w - 1f, Rome.size.h - 1f)
 
   def reset() = {
     level.reset()
+    while (bonuses.size != 0)
+      bonuses.pop().destroy()
   }
 
   def loadLevel(number: Int) = {
@@ -44,9 +49,15 @@ object World extends EventListener {
     paddle.draw(spriteBatch)
   }
 
+  private def actBonuses(delta: Float) = {
+    for (i <- 0 until bonuses.size)
+      bonuses.get(i).act(delta)
+  }
+
   def act(delta: Float): Unit = {
     level.act(delta)
     paddle.act(delta)
+    actBonuses(delta)
     time += delta
   }
 
@@ -56,14 +67,17 @@ object World extends EventListener {
     paddle.draw(spriteBatch)
   }
 
-  override def heyListen(event: Event): Unit = event match {
-    case destroyBrik: DestroyBrik => level.removeBrik(destroyBrik.brik)
-    case destroyBall: DestroyBall => {
-      balls.removeValue(destroyBall.ball, true)
-      if (noMoreBalls)
-        EventHub.lost()
+  override def heyListen(event: Event): Unit = {
+    event match {
+      case destroyBrik: DestroyBrik => level.removeBrik(destroyBrik.brik)
+      case destroyBall: DestroyBall => {
+        balls.removeValue(destroyBall.ball, true)
+        if (noMoreBalls)
+          EventHub.lost()
+      }
+      case bonusCreated: BonusCreatedEvent => bonuses.add(bonusCreated.bonus)
+      case _ => unhandled(event)
     }
-    case _ => unhandled(event)
   }
 
   private def noMoreBalls = {

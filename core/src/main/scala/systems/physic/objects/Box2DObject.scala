@@ -22,6 +22,7 @@ trait Box2DObject {
   def centerB2D(): Vector2 = body.getWorldCenter
 
   def setPosBox2D(x: Float, y: Float): Unit = body.setTransform(x, y, 0)
+  def setPosBox2D(vector: Vector2): Unit = setPosBox2D(vector.x, vector.y)
   def setPosScreen(x: Float, y: Float): Unit = setPosBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))
 
   def moveScreen(x: Float, y: Float): Unit = moveBox2D(Box2DHelper.toBoxUnits(x), Box2DHelper.toBoxUnits(y))

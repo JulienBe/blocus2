@@ -15,7 +15,6 @@ object GameLoop extends Enumeration {
 
   val playing = new GameState {
     override def playLoop(delta: Float, spriteBatch: SpriteBatch, loop: Looper): Unit = {
-      println("playing")
       World.act(delta)
       Physic.doPhysicsStep(delta)
     }
@@ -23,7 +22,6 @@ object GameLoop extends Enumeration {
 
   val notStarted = new GameState {
     override def playLoop(delta: Float, spriteBatch: SpriteBatch, loop: Looper): Unit = {
-      println("not started")
       World.beforeBeginAct(delta)
       spriteBatch.begin()
       World.beforeBeginDraw(spriteBatch)
@@ -37,7 +35,6 @@ object GameLoop extends Enumeration {
 
   val dead: GameState = new GameState {
     override def playLoop(delta: Float, spriteBatch: SpriteBatch, loop: Looper): Unit = {
-      println("dead")
       World.reset()
       World.beforeBeginAct(delta)
       spriteBatch.begin()

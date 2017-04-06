@@ -10,16 +10,16 @@ import systems.eventhub.events.{BallCollisionEvent, Event}
 import systems.eventhub.{EventHub, EventListener}
 import systems.physic.objects.Box2DObject
 import systems.physic.{Box2DHelper, Physic}
-import systems.world.Level
+import systems.world.{BonusMaster, Level}
 import units.GameObject
-import utils.Creator
+import utils.Roll
 
 /**
   * Created by julien on 23/01/17.
   */
 class Brik(val anchorX: Float, var anchorY: Float) extends EventListener with Box2DObject with GameObject {
 
-  setPosBox2D(Rome.size.hwB2D + (Rome.size.hwB2D - anchorX), Brik.yStart + Creator.float(Brik.yOffset))
+  setPosBox2D(Rome.size.hwB2D + (Rome.size.hwB2D - anchorX), Brik.yStart + Roll.float(Brik.yOffset))
   EventHub.registerForCollisions(this)
 
   private var hp = 1
@@ -28,6 +28,7 @@ class Brik(val anchorX: Float, var anchorY: Float) extends EventListener with Bo
   def bodyType(): BodyType = Brik.bodyType
   def mask(): Short = Brik.mask
   def size(): Size = Brik.size
+  def xp(): Int = Brik.xp
 
   override def createBody(): Body = Box2DHelper.createRectangle(this, Brik.rect)
 
@@ -51,6 +52,7 @@ class Brik(val anchorX: Float, var anchorY: Float) extends EventListener with Bo
   private def collidingWithBall(ballEvent: BallCollisionEvent) = {
     if (ballEvent.objB.equals(this)) {
       hp -= 1
+      BonusMaster.roll(this)
       destroy
     }
   }
@@ -66,6 +68,7 @@ object Brik {
   val yOffset: Float = yStart / 2
   val size = new Size(Rome.size.w / Level.brikPerRow, 20)
   val anchorStrength = 5
+  val xp = 10
 
   val a1: Float = new Vector2(size.hw, size.hh).angle()
   val a2: Float = new Vector2(-size.hw, size.hh).angle()

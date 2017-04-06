@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.utils.Array
 import main.Rome
+import units.bonuses.Bonus
 import units.briks.Brik
 
 /**

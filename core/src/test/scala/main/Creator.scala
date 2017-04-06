@@ -1,7 +1,7 @@
 package scala.main
 
 import org.scalatest.FlatSpec
-import utils.Creator
+import utils.Roll
 
 import scala.util.Random
 
@@ -16,7 +16,7 @@ class CreatorTest extends FlatSpec {
     for (i <- 1 to 100) {
       val min = -100 * i * Random.nextFloat
       val max = 100 * i * Random.nextFloat
-      val n = Creator.floatInBounds(min, max)
+      val n = Roll.floatInBounds(min, max)
       assert(n >= min)
       assert(n < max)
     }

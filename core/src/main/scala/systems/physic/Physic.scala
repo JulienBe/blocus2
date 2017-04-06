@@ -2,23 +2,31 @@ package systems.physic
 
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.{Color, OrthographicCamera}
-import com.badlogic.gdx.math.{Matrix4, Vector2}
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
+import systems.eventhub.{EventHub, EventListener}
+import systems.eventhub.events._
+import systems.physic.objects.Box2DObject
 
 /**
   * Created by julien on 24/01/17.
   */
-object Physic {
+object Physic extends EventListener {
+
+  EventHub.registerForGame(this)
 
   val playerCategory: Short = 0x0001
   val otherCategory: Short = 0x0002
+  val bonusCategory: Short = 0x0004
 
-  val playerMask: Short = otherCategory
+  val playerMask: Short = (otherCategory | bonusCategory).toShort
   val otherMask: Short = (otherCategory | playerCategory).toShort
+  val bonusMask: Short = (playerCategory).toShort
 
   private val bodiesToClean = new Array[Body]()
   private val bodiesToDeactivate = new Array[Body]()
+  private val creationToDo = new Array[AddEvent]()
   private val gravity = new Vector2(0, 0)
 
   private[physic] val world = new World(gravity, true)
@@ -38,6 +46,19 @@ object Physic {
     rayHandler.updateAndRender()
   }
 
+  def creation(creationToDo: Array[AddEvent]) = {
+    for (i <- 0 until creationToDo.size) {
+      val e = creationToDo.get(i)
+      e match {
+        case addBonus: AddBonusEvent => {
+          val b = addBonus.bonus.apply()
+          EventHub.bonusCreated(b)
+        }
+      }
+    }
+    creationToDo.clear()
+  }
+
   def doPhysicsStep(deltaTime: Float) {
     // fixed time step
     // max frame time to avoid spiral of death (on slow devices)
@@ -49,8 +70,9 @@ object Physic {
     }
     doForAllBodies(world.destroyBody, bodiesToClean)
     sleepAllBodies(bodiesToDeactivate)
-    val bodies = new Array[Body]()
-    world.getBodies(bodies)
+    creation(creationToDo)
+//    val bodies = new Array[Body]()
+//    world.getBodies(bodies)
   }
 
   def bodyToClean(body: Body): Unit = bodiesToClean.add(body)
@@ -67,4 +89,13 @@ object Physic {
       bodies.get(i).setActive(false)
     bodies.clear()
   }
+
+  override def heyListen(event: Event): Unit = {
+    event match {
+      case addBonus: AddBonusEvent => creationToDo.add(addBonus)
+//      case addBall: AddBall => balls.add(addBall.ball)
+      case _ => unhandled(event)
+    }
+  }
+
 }

@@ -65,7 +65,7 @@ object Box2DHelper {
     shape
   }
 
-  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object) = {
+  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object): Body = {
     val b = Physic.world.createBody(createBodyDef(bodyType))
     createFixture(b, shape, category, mask, obj)
     shape.dispose()

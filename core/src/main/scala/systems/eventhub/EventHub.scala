@@ -3,6 +3,7 @@ package systems.eventhub
 import com.badlogic.gdx.physics.box2d.Contact
 import systems.eventhub.events._
 import units.balls.Ball
+import units.bonuses.BallBonus
 import units.briks.Brik
 
 import scala.collection.mutable
@@ -25,12 +26,15 @@ object EventHub {
   private def addListener(eventListener: EventListener, mutableList: mutable.MutableList[EventListener]) = mutableList.+=(eventListener)
 
   private def tell(obj: Any) = obj match {
-    case gameLost: GameLost             => gameListener.foreach(_.heyListen(gameLost))
-    case touched: TouchedEvent          => inputsListener.foreach(_.heyListen(touched))
-    case justTouched: JustTouchedEvent  => inputsListener.foreach(_.heyListen(justTouched))
-    case brikEvent: DestroyBrik         => destroyListener.foreach(_.heyListen(brikEvent))
-    case ballEvent: DestroyBall         => destroyListener.foreach(_.heyListen(ballEvent))
-    case collisionEvent: CollisionEvent => collisionsListener.foreach(_.heyListen(collisionEvent))
+    case gameLost: GameLost              => gameListener.foreach(_.heyListen(gameLost))
+    case addBonus: AddBonusEvent         => gameListener.foreach(_.heyListen(addBonus))
+    case bonusCreated: BonusCreatedEvent => gameListener.foreach(_.heyListen(bonusCreated))
+//    case addBall: AddBall               => gameListener.foreach(_.heyListen(addBall));
+    case touched: TouchedEvent           => inputsListener.foreach(_.heyListen(touched))
+    case justTouched: JustTouchedEvent   => inputsListener.foreach(_.heyListen(justTouched))
+    case brikEvent: DestroyBrik          => destroyListener.foreach(_.heyListen(brikEvent))
+    case ballEvent: DestroyBall          => destroyListener.foreach(_.heyListen(ballEvent))
+    case collisionEvent: CollisionEvent  => collisionsListener.foreach(_.heyListen(collisionEvent))
   }
 
   def mouseMoved(x: Int, y: Int): Unit = tell(new TouchedEvent(x, y))
@@ -39,4 +43,7 @@ object EventHub {
   def destroy(brik: Brik): Unit = tell(new DestroyBrik(brik))
   def lostBall(b: Ball) = tell(new DestroyBall(b))
   def lost() = tell(new GameLost)
+//  def addBall(b: Ball) = tell(new AddBall(b))
+  def addBonus(bonus: () => BallBonus) = tell(new AddBonusEvent(bonus))
+  def bonusCreated(bonus: BallBonus) = tell(new BonusCreatedEvent(bonus))
 }
